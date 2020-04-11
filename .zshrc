@@ -1,6 +1,9 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# Zsh Completions - https://github.com/zsh-users/zsh-completions
+fpath=(/usr/local/share/zsh-completions $fpath)
+
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/raja/.oh-my-zsh"
 
