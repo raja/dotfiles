@@ -100,4 +100,9 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Syntax Highlighting - https://github.com/zsh-users/zsh-syntax-highlighting
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Manage your dotfiles with git - https://github.com/raja/dotfiles
 alias dotfiles='/usr/bin/git --git-dir=/Users/raja/.dotfiles/ --work-tree=/Users/raja'
