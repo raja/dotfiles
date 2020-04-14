@@ -71,12 +71,55 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+    fasd
+    git
+)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+# fasd (https://github.com/clvv/fasd) + fzf (https://github.com/junegunn/fzf)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Uses fd as default command showing also hidden files
+FZF_DEFAULT_COMMAND="fd --hidden"
+# ctrl+o opens Visual Studio Code on current folder or file
+# FZF_DEFAULT_OPTS="--bind='ctrl-o:execute-silent(code {})+abort'"
+# If current selection is a text file shows its content,
+# if it's a directory shows its content, the rest is ignored
+FZF_CTRL_T_OPTS="--preview-window wrap --preview '
+if [[ -f {} ]]; then
+    file --mime {} | grep -q \"text\/.*;\" && bat --color \"always\" {} || (tput setaf 1; file --mime {})
+elif [[ -d {} ]]; then
+    exa -l --color always {}
+else;
+    tput setaf 1; echo YOU ARE NOT SUPPOSED TO SEE THIS!
+fi'"
+
+# j - jump quickly to frequent files & directories
+unalias j
+j() {
+    #[ $# -gt 0 ] && fasd_cd -d "$*" && return
+    local dir
+    dir="$(fasd -Rdl "$1" | fzf -1 -0 --no-sort +m --height=40% --min-height=5 --cycle --bind 'shift-tab:up,tab:down' --reverse)" && cd "${dir}" || return 1
+}
+
+# ch - search chrome history
+ch() {
+  local cols sep
+  cols=$(( COLUMNS / 3 ))
+  sep='{::}'
+
+  cp -f ~/Library/Application\ Support/Google/Chrome/Default/History /tmp/h
+
+  sqlite3 -separator $sep /tmp/h \
+    "select substr(title, 1, $cols), url
+     from urls order by last_visit_time desc" |
+  awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
+  fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs open
+}
 # Syntax Highlighting - https://github.com/zsh-users/zsh-syntax-highlighting
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
