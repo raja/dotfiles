@@ -80,6 +80,12 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+# direnv - Manage environment variables per directory - https://direnv.net/
+eval "$(direnv hook zsh)"
+
+# Syntax Highlighting - https://github.com/zsh-users/zsh-syntax-highlighting
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 # fasd (https://github.com/clvv/fasd) + fzf (https://github.com/junegunn/fzf)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -120,8 +126,6 @@ ch() {
   awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
   fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs open
 }
-# Syntax Highlighting - https://github.com/zsh-users/zsh-syntax-highlighting
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # IEx Shell History - https://hexdocs.pm/iex/IEx.html
 export ERL_AFLAGS="-kernel shell_history enabled"
