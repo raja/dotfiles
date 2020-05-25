@@ -3,7 +3,7 @@
 	name = Raja Bhatia
 	# keep email private - https://help.github.com/en/articles/about-commit-email-addresses
 	email = raja@users.noreply.github.com
-	signingkey = E18EC2D73B77B31D
+	signingkey = 3A649EA04732C8C5
 [color]
 	status = auto
 	diff = auto
