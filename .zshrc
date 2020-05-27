@@ -132,3 +132,9 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 
 # Manage your dotfiles with git - https://github.com/raja/dotfiles
 alias dotfiles='/usr/bin/git --git-dir=/Users/raja/.dotfiles/ --work-tree=/Users/raja'
+
+# bat
+alias cat='bat'
+
+# exa
+alias ls='exa'
